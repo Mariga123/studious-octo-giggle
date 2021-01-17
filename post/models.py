@@ -16,18 +16,18 @@ class Tag(models.Model):
     slug = models.SlugField(null=False, unique=True)
 
     class Meta:
+        verbose_name='Tag'
         verbose_name_plural='Tags'
 
     def get_absolute_url(self):
         return reverse('tags', arg=[self.slug])
 
-    def __str__(self):
-        self.title
+    # def __str__(self):
+    #    return self.title
 
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.title)
-
         return super().save(*args, **kwargs)
 
 class Post(models.Model):
@@ -42,9 +42,6 @@ class Post(models.Model):
     def get_absolute_url(self):
         return reverse('postdetails', args=[str(self.id)])
 
-    def __str__(self):
-        return self.posted
-
 class Follow(models.Model):
     follower = models.ForeignKey(User, on_delete=models.CASCADE, related_name='follower')
     following = models.ForeignKey(User, on_delete=models.CASCADE, related_name='following')
@@ -58,7 +55,7 @@ class Stream(models.Model):
     def add_post(sender, instance, *args, **kwargs):
         post = instance
         user = post.user
-        follower = Follow.objects.all.filter(following=user)
+        followers = Follow.objects.all().filter(following=user)
 
         for follower in followers:
             stream = Stream(post=post, user=follower.follower, date=post.posted, following=user)
