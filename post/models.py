@@ -19,11 +19,11 @@ class Tag(models.Model):
         verbose_name='Tag'
         verbose_name_plural='Tags'
 
-    def get_absolute_url(self):
-        return reverse('tags', arg=[self.slug])
+    # def get_absolute_url(self):
+    #  return reverse('tags', args=[self.slug])
 
-    # def __str__(self):
-    #    return self.title
+    def __str__(self):
+       return self.title
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -41,6 +41,7 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return reverse('postdetails', args=[str(self.id)])
+
 
 class Follow(models.Model):
     follower = models.ForeignKey(User, on_delete=models.CASCADE, related_name='follower')
