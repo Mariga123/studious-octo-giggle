@@ -19,8 +19,8 @@ class Tag(models.Model):
         verbose_name='Tag'
         verbose_name_plural='Tags'
 
-    # def get_absolute_url(self):
-    #  return reverse('tags', args=[self.slug])
+    def get_absolute_url(self):
+     return reverse('tags', args=[self.slug])
 
     def __str__(self):
        return self.title
@@ -62,4 +62,7 @@ class Stream(models.Model):
             stream = Stream(post=post, user=follower.follower, date=post.posted, following=user)
             stream.save()
 
+class Likes(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_like')
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post_likes')
 post_save.connect(Stream.add_post, sender=Post)
