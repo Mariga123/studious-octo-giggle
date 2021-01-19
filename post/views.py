@@ -41,7 +41,7 @@ def PostDetails(request, post_id):
 		if profile.favorites.filter(id=post_id).exists():
 			favorited = True
 
-	template =loader.get_template('post_detail.html')
+	template = loader.get_template('post_detail.html')
 
 	context = {
 		'post': post,
@@ -129,7 +129,8 @@ def favorite(request, post_id):
 		profile.favourites.remove(post)
 
 	else:
-		profile.favorites.remove(post)
+		profile.favorites.add(post)
+
 	return HttpResponseRedirect(reverse('postdetails', args=[post_id]))
 
 
