@@ -1,5 +1,5 @@
 from django import forms 
-from post.models import Post
+from post.models import Post 
 
 class NewPostForm(forms.ModelForm):
     picture = forms.ImageField(required=True)
