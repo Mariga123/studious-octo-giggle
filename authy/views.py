@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from authy.forms import SignupForm, ChangePasswordForm, EditProfileForm
 from django.contrib.auth.models import User
+from post.models import Post
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
@@ -10,23 +11,30 @@ from django.template import loader
 from django.http import HttpResponse
 
 from django.core.paginator import Paginator
+from django.urls import resolve
 
 # Create your views here.
 def UserProfile(request, username):
 	user = get_object_or_404(User, username=username)
 	profile = Profile.objects.get(user=user)
-	articles = profile.favorites.all()
+	url_name = resolve(request.path).url_name
+
+	if url_name == 'profile':
+		posts = Post.objects.filter(user=user).order_by('-posted')
+	else:
+		posts = profile.favorites.all()
 
 	#Pagination
-	paginator = Paginator(articles, 6)
+	paginator = Paginator(posts, 8)
 	page_number = request.GET.get('page')
-	articles_paginator = paginator.get_page(page_number)
+	posts_paginator = paginator.get_page(page_number)
 
 	template = loader.get_template('profile.html')
 
 	context = {
-		'articles': articles_paginator,
+		'posts': posts_paginator,
 		'profile':profile,
+		'url_name': url_name,
 	}
 
 	return HttpResponse(template.render(context, request))
@@ -36,7 +44,7 @@ def Signup(request):
 	if request.method == 'POST':
 		form = SignupForm(request.POST)
 		if form.is_valid():
-			username = form.cleaned_data.get('username')
+			username = form.cleaned_data.get('usehttps://bulma.io/images/placeholders/128x128.pngrname')
 			email = form.cleaned_data.get('email')
 			password = form.cleaned_data.get('password')
 			User.objects.create_user(username=username, email=email, password=password)
