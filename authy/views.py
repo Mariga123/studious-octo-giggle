@@ -57,11 +57,11 @@ def Signup(request):
 	if request.method == 'POST':
 		form = SignupForm(request.POST)
 		if form.is_valid():
-			username = form.cleaned_data.get('usehttps://bulma.io/images/placeholders/128x128.pngrname')
+			username = form.cleaned_data.get('username')
 			email = form.cleaned_data.get('email')
 			password = form.cleaned_data.get('password')
 			User.objects.create_user(username=username, email=email, password=password)
-			return redirect('index')
+			return redirect('edit-profile')
 	else:
 		form = SignupForm()
 	

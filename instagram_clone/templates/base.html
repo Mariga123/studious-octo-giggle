@@ -47,7 +47,7 @@
                 </a>
                 <a href="{% url 'profile' request.user %}" class="navbar-item">
                     <i class="material-icons">face</i>
-                    Profile
+                    Profile- <strong>{{ request.user }}</strong>
                 </a>
                 <a href="{% url 'newpost' %}" class="navbar-item">
                     <i style="color:green;" class="material-icons">perm_media</i>
