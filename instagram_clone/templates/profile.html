@@ -9,8 +9,8 @@
     </div>
     <div class="media-content">
         <div class="content">
-            <h1 class="title is-1">@zelly_jones</h1>
-            <h2 class="subtitle is-3">Zelly Jones</h2>
+            <h1 class="title is-1">{% if profile.first_name %}{{ profile.first_name }}{{ profile.last_name }}{% endif %}</h1>
+            <h2 class="subtitle is-3">@ {{ profile.user }}</h2>
             <div class="media-right">
                 <button class="button is-success">Follow</button>
             </div>
@@ -18,34 +18,27 @@
         <nav class="level">
             <div class="level-item has-text-centered">
                 <div>
-                    <p class="heading">Tweets</p>
-                    <p class="title">3,456</p>
+                    <p class="heading">Posts</p>
+                    <p class="title">{{ posts_count }}</p>
                 </div>
             </div>
             <div class="level-item has-text-centered">
                 <div>
                     <p class="heading">Following</p>
-                    <p class="title">123</p>
+                    <p class="title">{{ following_count }}</p>
                 </div>
             </div>
             <div class="level-item has-text-centered">
                 <div>
                     <p class="heading">Followers</p>
-                    <p class="title">456K</p>
-                </div>
-            </div>
-            <div class="level-item has-text-centered">
-                <div>
-                    <p class="heading">Likes</p>
-                    <p class="title">789</p>
+                    <p class="title">{{ followers_count }}</p>
                 </div>
             </div>
         </nav>
-        <p class="subtitle is-5">Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in
-            laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in
-            the 15th century who is thought to have scrambled</p>
-
+        <p class="subtitle is-5">{% if profile.profile_info %}{{ profile.profile_info }}{% endif %}</p>
+{% if user.is_authenticated and user == profile.user %}
         <button class="button">Edit Profile</button>
+{% endif %}
     </div>
 </article>
 <section class="section">

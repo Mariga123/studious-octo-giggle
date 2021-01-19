@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from authy.forms import SignupForm, ChangePasswordForm, EditProfileForm
 from django.contrib.auth.models import User
-from post.models import Post
+from post.models import Post,Follow
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
@@ -24,6 +24,11 @@ def UserProfile(request, username):
 	else:
 		posts = profile.favorites.all()
 
+	# profile starts infor
+	posts_count = Post.objects.filter(user=user).count()
+	following_count = Follow.objects.filter(follower=user).count()
+	followers_count = Follow.objects.filter(following=user).count()
+
 	#Pagination
 	paginator = Paginator(posts, 8)
 	page_number = request.GET.get('page')
@@ -35,6 +40,9 @@ def UserProfile(request, username):
 		'posts': posts_paginator,
 		'profile':profile,
 		'url_name': url_name,
+		'posts_count':posts_count,
+		'followers_count': followers_count,
+		'following_count':following_count,
 	}
 
 	return HttpResponse(template.render(context, request))
