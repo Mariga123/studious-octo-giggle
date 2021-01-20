@@ -153,5 +153,3 @@ def favorite(request, post_id):
 		profile.favorites.add(post)
 
 	return HttpResponseRedirect(reverse('postdetails', args=[post_id]))
-
-
