@@ -1,4 +1,4 @@
 virtual
 _pysache_/
-
+.env
 *.pyc

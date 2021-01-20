@@ -33,7 +33,7 @@ class Tag(models.Model):
 class Post(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     picture = models.ImageField(upload_to=user_directory_path, verbose_name='Picture', null=False)
-    caption = models.TextField(max_length=1500, verbose_name='Caption')
+    caption = models.TextField(max_length=1400, verbose_name='Caption')
     posted = models.DateTimeField(auto_now_add=True)
     tags = models.ManyToManyField(Tag, related_name='tags')
     user =models.ForeignKey(User, on_delete=models.CASCADE)
